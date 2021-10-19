@@ -1,18 +1,5 @@
-/* eslint-disable jsx-a11y/accessible-emoji */
-// import React from "react";
-// import { useAuth } from "../../contexts/auth";
-
-// const Menu: React.FC = () => {
-//     const { signed, user } = useAuth();
-//     return (
-//         signed ? <>{user.user}</> : <>Não tem Nome</>
-//     );
-// }
-
-// export default Menu;
-
-import React from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import React, { ReactNode } from "react";
+import { NavLink as ReactNavLink, useHistory } from "react-router-dom";
 
 import {
     HStack,
@@ -30,8 +17,15 @@ import {
     MenuButton,
     MenuGroup,
     MenuItem,
-    MenuDivider
+    MenuDivider,
+    useColorModeValue,
+    Flex,
+    IconButton,
+    useDisclosure,
+    Stack
 } from "@chakra-ui/react";
+import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+
 
 import { RiShoppingCartLine } from "react-icons/ri";
 
@@ -41,13 +35,17 @@ import { useAuth } from "../../contexts/auth";
 
 
 export default function Menu(): React.ReactElement {
+    const { signed, user, Logout } = useAuth();
+    const history = useHistory();
+
+    const Links = [{ label: 'Dashboard', href: '/' }, { label: 'Administração', href: '/admin' }];
+
     const {
         disclosure: { onOpen },
         cart,
     } = useCart();
 
-    const { signed, user, Logout } = useAuth();
-    const history = useHistory();
+
     const handleLogin = () => {
         history.push("/login");
     }
@@ -55,6 +53,10 @@ export default function Menu(): React.ReactElement {
     const handleLogout = () => {
         Logout();
         history.push("/login");
+    }
+
+    const handleGoTo: any = (src: string) => {
+        history.push(src);
     }
 
     const UserMenu = () => {
@@ -72,7 +74,7 @@ export default function Menu(): React.ReactElement {
                             {user.name}
                         </Text>
                     </MenuButton>
-                    <MenuList>
+                    <MenuList sx={{ color: "#000" }}>
                         <MenuGroup title="Profile">
                             <MenuItem>Minha Conta</MenuItem>
                             <MenuItem>Meus Pedidos </MenuItem>
@@ -88,34 +90,42 @@ export default function Menu(): React.ReactElement {
         )
     }
 
+    const NavLink = ({ children }: { children: any }) => (
+        <Box
+            sx={{cursor: "pointer"}}
+            px={2}
+            py={1}
+            key={children.href}
+            rounded={'md'}
+            _hover={{
+                textDecoration: 'none',
+                bg: useColorModeValue('gray.200', 'gray.700'),
+            }}
+            onClick={() => handleGoTo(children.href)}
+        >
+            {children.label}
+        </Box>
+    );
+
 
     return (
-        <Box as="header" position="static" w="100%" top="0" zIndex="999">
-            <Box bg="gray.300">
-                <HStack w="80%" m="0 auto" justify="center" p="3px 0">
-                    <Text fontSize="xs">Desconto na primeira compra</Text>
-                    <Center h="15px">
-                        <Divider orientation="vertical" borderColor="gray.500" />
-                    </Center>
-                    <Text fontSize="xs">Frete grátis acima de R$99 🚚</Text>
-                    <Center h="15px">
-                        <Divider orientation="vertical" borderColor="gray.500" />
-                    </Center>
-                    <Text fontSize="xs">Parcelamento em até 10x sem juros</Text>
-                </HStack>
-            </Box>
-
-            <Box as="nav" bg="gray.500" color="gray.400">
-                <HStack w="80%" h="70px" m="0 auto" justify="center">
-                    <Box w="40%"></Box>
-                    <Box textAlign="center" w="18%">
-                        <Link as={NavLink} to="/" activeClassName="none">
-                            <Image src={logo} m="0 auto" h="50px" />
-                        </Link>
-                    </Box>
-                    <HStack w="40%" justifyContent="flex-end" spacing="md">
+        <>
+            <Box sx={{ color: "#fff" }} bg={useColorModeValue('gray.700', 'gray.900')} px={4}>
+                <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
+                    <HStack spacing={8} alignItems={'center'}>
+                        <Box>Logo</Box>
+                        <HStack
+                            as={'nav'}
+                            spacing={4}
+                            display={{ base: 'none', md: 'flex' }}>
+                            {Links.map((link) => (
+                                <NavLink key={link.href} >{link}</NavLink>
+                            ))}
+                        </HStack>
+                    </HStack>
+                    <Flex alignItems={'center'}>
                         <UserMenu></UserMenu>
-                        {signed ? <Button
+                        <Button
                             position="relative"
                             type="button"
                             onClick={onOpen}
@@ -140,10 +150,52 @@ export default function Menu(): React.ReactElement {
                                     {cart.length}
                                 </Text>
                             )}
-                        </Button>: null}
-                    </HStack>
-                </HStack>
+                        </Button>
+                    </Flex>
+                </Flex>
             </Box>
-        </Box>
+        </>
+        // <Box as="header" position="static" w="100%" top="0" zIndex="999">
+        //     <Box as="nav" bg="gray.500" color="gray.400">
+        //         <HStack w="80%" h="70px" m="0 auto" justify="center">
+        //             <Box w="40%"></Box>
+        //             <Box textAlign="center" w="18%">
+        //                 <Link as={ReactNavLink} to="/" activeClassName="none">
+        //                     <Image src={logo} m="0 auto" h="50px" />
+        //                     Laticinios Vieira
+        //                 </Link>
+        //             </Box>
+        //             <HStack w="40%" justifyContent="flex-end" spacing="md">
+        //                 <UserMenu></UserMenu>
+        //                 {signed ? <Button
+        //                     position="relative"
+        //                     type="button"
+        //                     onClick={onOpen}
+        //                     colorScheme="none"
+        //                     color="gray.400"
+        //                 >
+        //                     <Icon as={RiShoppingCartLine} boxSize="25px" />
+        //                     {cart.length > 0 && (
+        //                         <Text
+        //                             as="sup"
+        //                             position="absolute"
+        //                             right="5px"
+        //                             d="flex"
+        //                             justifyContent="center"
+        //                             alignItems="center"
+        //                             backgroundColor="red.500"
+        //                             color="white"
+        //                             h="20px"
+        //                             w="20px"
+        //                             borderRadius="50%"
+        //                         >
+        //                             {cart.length}
+        //                         </Text>
+        //                     )}
+        //                 </Button> : null}
+        //             </HStack>
+        //         </HStack>
+        //     </Box>
+        // </Box>
     );
 }
