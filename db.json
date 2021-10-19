@@ -1,64 +1,80 @@
 {
-    "profile": [
-      {
-        "id":1,
-        "name": "Gabriel Henrique",
-        "email":"gabriel@vitrine.com.br",
-        "phone": "(16)99999-9999",
-        "roles": ["Admin","Client"],
-        "user": "gabriel",
-        "password": "abacate"
-      },
-      {
-        "id":2,
-        "name": "Felipe Botelho Rodrigues",
-        "email":"felipe@vitrine.com.br",
-        "phone": "(16)88888-8888",
-        "roles": ["Client"],
-        "user": "felipe",
-        "password": "abacate"
-      }
-    ],
-      "products": [
-          {
-            "id":1,
-            "nome":"Mozzarela de búfala",
-            "preco":20.00,
-            "foto":"https://www.terra.com.br/culinaria/infograficos/tipos-de-queijos/galeria/fotos/tipos-de-queijos-1.jpg",
-            "descricao":"Um queijo fresco , levemente adocicado",
-            "quantidade":10
-          },
-          {
-            "id":2,
-            "nome":"Brie",
-            "preco":35.00,
-            "foto":"https://www.terra.com.br/culinaria/infograficos/tipos-de-queijos/galeria/fotos/tipos-de-queijos-3.jpg",
-            "descricao":"Um sabor suave e intenso",
-            "quantidade":10
-          },
-          {
-            "id":3,
-            "nome":"Camembert",
-            "preco":55.00,
-            "foto":"https://www.terra.com.br/culinaria/infograficos/tipos-de-queijos/galeria/fotos/tipos-de-queijos-2.jpg",
-            "descricao":"Um sabor suave e levemente picante",
-            "quantidade":10
-          },
-          {
-            "id":4,
-            "nome":"Mozzarela",
-            "preco":55.00,
-            "foto":"https://www.terra.com.br/culinaria/infograficos/tipos-de-queijos/galeria/fotos/tipos-de-queijos-4.jpg",
-            "descricao":"Seu sabor é fresco, lácteo, agradavelmente ácido. Quando fresco sua textura é tenra e borrachuda. Após onze dias de maturação, adquire consistência mais cremosa e fundente, ideal para utilização em pizzas",
-            "quantidade":10
-          },
-          {
-            "id":5,
-            "nome":"Provolone",
-            "preco":85.00,
-            "foto":"https://www.terra.com.br/culinaria/infograficos/tipos-de-queijos/galeria/fotos/tipos-de-queijos-5.jpg",
-            "descricao":"Um sabor levemente picante",
-            "quantidade":10
-          }
-        ]
-  }
+  "profile": [
+    {
+      "id": 1,
+      "name": "Gabriel Henrique",
+      "email": "gabriel@vitrine.com.br",
+      "phone": "(16)99999-9999",
+      "roles": [
+        "Admin",
+        "Client"
+      ],
+      "user": "gabriel",
+      "password": "abacate"
+    },
+    {
+      "id": 2,
+      "name": "Felipe Botelho Rodrigues",
+      "email": "felipe@vitrine.com.br",
+      "phone": "(16)88888-8888",
+      "roles": [
+        "Client"
+      ],
+      "user": "felipe",
+      "password": "abacate"
+    },
+    {
+      "id": 3,
+      "name": "Gustavo Pires",
+      "email": "gustavo@vitrine.com.br",
+      "phone": "14333322222",
+      "roles": [
+        "Client"
+      ],
+      "user": "gugu",
+      "password": "feijao"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "nome": "Mozzarela de búfala",
+      "preco": 20,
+      "foto": "https://www.terra.com.br/culinaria/infograficos/tipos-de-queijos/galeria/fotos/tipos-de-queijos-1.jpg",
+      "descricao": "Um queijo fresco , levemente adocicado",
+      "quantidade": 10
+    },
+    {
+      "id": 2,
+      "nome": "Brie",
+      "preco": 35,
+      "foto": "https://www.terra.com.br/culinaria/infograficos/tipos-de-queijos/galeria/fotos/tipos-de-queijos-3.jpg",
+      "descricao": "Um sabor suave e intenso",
+      "quantidade": 10
+    },
+    {
+      "id": 3,
+      "nome": "Camembert",
+      "preco": 55,
+      "foto": "https://www.terra.com.br/culinaria/infograficos/tipos-de-queijos/galeria/fotos/tipos-de-queijos-2.jpg",
+      "descricao": "Um sabor suave e levemente picante",
+      "quantidade": 10
+    },
+    {
+      "id": 4,
+      "nome": "Mozzarela",
+      "preco": 55,
+      "foto": "https://www.terra.com.br/culinaria/infograficos/tipos-de-queijos/galeria/fotos/tipos-de-queijos-4.jpg",
+      "descricao": "Seu sabor é fresco, lácteo, agradavelmente ácido. Quando fresco sua textura é tenra e borrachuda. Após onze dias de maturação, adquire consistência mais cremosa e fundente, ideal para utilização em pizzas",
+      "quantidade": 10
+    },
+    {
+      "id": 5,
+      "nome": "Provolone",
+      "preco": 85,
+      "foto": "https://www.terra.com.br/culinaria/infograficos/tipos-de-queijos/galeria/fotos/tipos-de-queijos-5.jpg",
+      "descricao": "Um sabor levemente picante",
+      "quantidade": 10
+    }
+  ]
+}

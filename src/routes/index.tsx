@@ -4,9 +4,10 @@ import { Switch, Route, RouteProps } from "react-router-dom";
 import ConstantRoutes from "./routes_array";
 import Admin from "../pages/Admin";
 import ErrorPage from "../pages/Error";
-import PrivateRoute from "./private_route";
+import { useAuth } from "../contexts/auth";
 
 export default function Routes(): React.ReactElement {
+  const {signed} = useAuth();
   function HandleRoutes(props: RouteProps): React.ReactElement {
     return <Route {...props} />;
   }
@@ -16,7 +17,7 @@ export default function Routes(): React.ReactElement {
       {ConstantRoutes.map((route) => (
         <HandleRoutes {...route} key={route.path} />
       ))}
-      <PrivateRoute path="/admin" component={Admin}/>
+      {signed ? <Route path="/admin" component={Admin}/>: null}
       <Route path="*">
         <ErrorPage />
       </Route>

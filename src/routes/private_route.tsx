@@ -3,8 +3,8 @@ import { Route, Redirect } from "react-router-dom";
 import { useAuth } from "../contexts/auth";
 
 function PrivateRoute({ component: Component, ...rest }: any) {
-    const { signed } = useAuth();
-
+    const { signed, user } = useAuth();
+  debugger;
   return (
     <Route
       {...rest}

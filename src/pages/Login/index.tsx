@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { useAuth } from '../../contexts/auth';
 
 import { RouteComponentProps } from "react-router-dom";
+import './styles.css'
 
 interface RouterProps {
   history: string;

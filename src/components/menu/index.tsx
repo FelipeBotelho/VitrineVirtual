@@ -90,7 +90,7 @@ export default function Menu(): React.ReactElement {
 
 
     return (
-        <Box as="header" position="fixed" w="100%" top="0" zIndex="999">
+        <Box as="header" position="static" w="100%" top="0" zIndex="999">
             <Box bg="gray.300">
                 <HStack w="80%" m="0 auto" justify="center" p="3px 0">
                     <Text fontSize="xs">Desconto na primeira compra</Text>
@@ -115,7 +115,7 @@ export default function Menu(): React.ReactElement {
                     </Box>
                     <HStack w="40%" justifyContent="flex-end" spacing="md">
                         <UserMenu></UserMenu>
-                        <Button
+                        {signed ? <Button
                             position="relative"
                             type="button"
                             onClick={onOpen}
@@ -140,7 +140,7 @@ export default function Menu(): React.ReactElement {
                                     {cart.length}
                                 </Text>
                             )}
-                        </Button>
+                        </Button>: null}
                     </HStack>
                 </HStack>
             </Box>
