@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/accessible-emoji */
 // import React from "react";
 // import { useAuth } from "../../contexts/auth";
 
@@ -11,7 +12,7 @@
 // export default Menu;
 
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 import {
     HStack,
@@ -24,18 +25,69 @@ import {
     Avatar,
     Link,
     Button,
+    Menu as MenuB,
+    MenuList,
+    MenuButton,
+    MenuGroup,
+    MenuItem,
+    MenuDivider
 } from "@chakra-ui/react";
 
 import { RiShoppingCartLine } from "react-icons/ri";
 
 import logo from "../../assets/images/cast-logo2.png";
 import { useCart } from "../../contexts/cart";
+import { useAuth } from "../../contexts/auth";
+
 
 export default function Menu(): React.ReactElement {
     const {
         disclosure: { onOpen },
         cart,
     } = useCart();
+
+    const { signed, user, Logout } = useAuth();
+    const history = useHistory();
+    const handleLogin = () => {
+        history.push("/login");
+    }
+
+    const handleLogout = () => {
+        Logout();
+        history.push("/login");
+    }
+
+    const UserMenu = () => {
+        return (
+            signed ?
+                <MenuB>
+                    <MenuButton>
+                        <Text as="span" d="flex" alignItems="center">
+                            <Avatar
+                                name={user.name}
+                                mr="10px"
+                                borderWidth="2px"
+                                borderColor="gray.400"
+                            />
+                            {user.name}
+                        </Text>
+                    </MenuButton>
+                    <MenuList>
+                        <MenuGroup title="Profile">
+                            <MenuItem>Minha Conta</MenuItem>
+                            <MenuItem>Meus Pedidos </MenuItem>
+                        </MenuGroup>
+                        <MenuDivider />
+                        <MenuGroup title="Session">
+                            <MenuItem onClick={handleLogout}>Log-out</MenuItem>
+                        </MenuGroup>
+                    </MenuList>
+                </MenuB >
+                :
+                <Button colorScheme="blue" onClick={handleLogin}>LogIn</Button>
+        )
+    }
+
 
     return (
         <Box as="header" position="fixed" w="100%" top="0" zIndex="999">
@@ -62,15 +114,7 @@ export default function Menu(): React.ReactElement {
                         </Link>
                     </Box>
                     <HStack w="40%" justifyContent="flex-end" spacing="md">
-                        <Text as="span" d="flex" alignItems="center">
-                            <Avatar
-                                name="Vinicius Soares"
-                                mr="10px"
-                                borderWidth="2px"
-                                borderColor="gray.400"
-                            />
-                            Vinicius Soares
-                        </Text>
+                        <UserMenu></UserMenu>
                         <Button
                             position="relative"
                             type="button"
