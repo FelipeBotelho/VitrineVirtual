@@ -4,7 +4,7 @@ import axios from "axios";
 interface AuthContextData {
   signed: boolean;
   user: any | null;
-  Login(user: object): Promise<null | any>;
+  Login(user: object): Promise<boolean> ;
   Logout(): void;
 }
 
@@ -24,11 +24,13 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   async function Login(userData: any) {
     const response: any = await axios.get(`${API_URL}/profile?user=${userData.user}&password=${userData.password}`);
-    if(!response.data){
-      return null;
+    debugger; 
+    if(!response.data || response.data.length == 0){
+      return false;
     }
     setUser(response.data[0]);
     localStorage.setItem('userData', JSON.stringify(response.data[0]));
+    return true;
   }
 
   function Logout() {

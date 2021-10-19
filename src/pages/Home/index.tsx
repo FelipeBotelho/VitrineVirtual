@@ -1,21 +1,33 @@
-import React from 'react';
-import { useAuth } from '../../contexts/auth';
+import React from "react";
+import { Box, Stack, Heading, SimpleGrid } from "@chakra-ui/react";
 
-const Home: React.FC = () => {
-  const { signed, Logout } = useAuth();
+import Card from "../../components/card";
+import { useProducts } from "../../contexts/products";
 
-  console.log(signed);
-
-  async function handleLogout() {
-    Logout();
-  }
+const ListProducts: React.FC = () => {
+  const { products } = useProducts();
 
   return (
-    <div>
-      <h1>Home</h1>
-      <button onClick={handleLogout}>Logout</button>
-    </div>
+    <Box as="main">
+      <Stack spacing="md">
+        <Heading
+          as="h1"
+          textTransform="uppercase"
+          borderBottom="5px solid"
+          borderColor="blue.600"
+          p="0 10px"
+          w="fit-content"
+        >
+          Queijos
+        </Heading>
+        <SimpleGrid columns={4} spacing={10}>
+          {products.map((item) => (
+            <Card key={item.id} product={item} />
+          ))}
+        </SimpleGrid>
+      </Stack>
+    </Box>
   );
 };
 
-export default Home;
+export default ListProducts;

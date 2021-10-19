@@ -40,9 +40,11 @@ const Login: React.FC<Props> = ({ history }) => {
       password: password,
     });
 
-    if(login == null){
+    if(!login){
         setLoading(false);
         setMessage("Usuário ou senha Inválidos");
+    }else{
+      history.push("/");
     }
   };
 
