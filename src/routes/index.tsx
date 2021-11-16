@@ -7,7 +7,7 @@ import ErrorPage from "../pages/Error";
 import { useAuth } from "../contexts/auth";
 
 export default function Routes(): React.ReactElement {
-  const {signed} = useAuth();
+  const { signed, user } = useAuth();
   function HandleRoutes(props: RouteProps): React.ReactElement {
     return <Route {...props} />;
   }
@@ -17,7 +17,7 @@ export default function Routes(): React.ReactElement {
       {ConstantRoutes.map((route) => (
         <HandleRoutes {...route} key={route.path} />
       ))}
-      {signed ? <Route path="/admin" component={Admin}/>: null}
+      {signed && user.roles.find((x: any) => x == "Admin") != null ? <Route path="/admin" component={Admin} /> : null}
       <Route path="*">
         <ErrorPage />
       </Route>

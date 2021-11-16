@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { theme } from "@chakra-ui/react";
+import { background, theme } from "@chakra-ui/react";
 
 export default createGlobalStyle`
 
@@ -9,8 +9,9 @@ export default createGlobalStyle`
     
   }
 
+
   main {
-    margin: 115px auto 30px;
+    margin: 30px auto 30px;
     width: 90%;
     max-width: 1980px;
   }
@@ -20,3 +21,4 @@ export default createGlobalStyle`
     font-weight: bold;
     border-bottom: 5px solid ${theme.colors.blue["500"]}
   }`;
+

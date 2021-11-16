@@ -13,6 +13,7 @@ interface ContextModel {
   handleAddCart: Function;
   handleRemoveCart: Function;
   disclosure: UseDisclosureProps;
+  cleanCart: Function;
 }
 
 const CartContext = createContext<ContextModel>({} as ContextModel);
@@ -38,6 +39,10 @@ const CartProvider: React.FC = ({ children }) => {
     duration: 5000,
     isClosable: true,
   };
+
+  const cleanCart = () => {
+    setCart([]);
+  }
 
   const handleAddCart = (id: number) => {
     const productIndex = products.findIndex((item) => item.id === id);
@@ -90,7 +95,7 @@ const CartProvider: React.FC = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, disclosure, handleAddCart, handleRemoveCart }}
+      value={{ cart, disclosure, handleAddCart, handleRemoveCart, cleanCart }}
     >
       {children}
     </CartContext.Provider>
@@ -99,8 +104,8 @@ const CartProvider: React.FC = ({ children }) => {
 
 function useCart(): ContextModel {
   const context = useContext(CartContext);
-  const { cart, disclosure, handleAddCart, handleRemoveCart } = context;
-  return { cart, disclosure, handleAddCart, handleRemoveCart };
+  const { cart, disclosure, handleAddCart, handleRemoveCart, cleanCart } = context;
+  return { cart, disclosure, handleAddCart, handleRemoveCart, cleanCart };
 }
 
 export { CartProvider, useCart };

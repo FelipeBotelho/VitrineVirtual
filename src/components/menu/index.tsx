@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { Children, ReactNode } from "react";
 import { NavLink as ReactNavLink, useHistory } from "react-router-dom";
 
 import {
@@ -24,21 +24,22 @@ import {
     useDisclosure,
     Stack
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 
 
 import { RiShoppingCartLine } from "react-icons/ri";
 
-import logo from "../../assets/images/cast-logo2.png";
+import logo from "../../assets/images/logo.jpg";
 import { useCart } from "../../contexts/cart";
 import { useAuth } from "../../contexts/auth";
 
 
 export default function Menu(): React.ReactElement {
     const { signed, user, Logout } = useAuth();
+    const {cleanCart} = useCart();
+
     const history = useHistory();
 
-    const Links = [{ label: 'Dashboard', href: '/' }, { label: 'Administração', href: '/admin' }];
+    const Links = [{ label: 'Home', href: '/' }, { label: 'Administração', isAdmin: true, href: '/admin' }];
 
     const {
         disclosure: { onOpen },
@@ -51,6 +52,7 @@ export default function Menu(): React.ReactElement {
     }
 
     const handleLogout = () => {
+        cleanCart();
         Logout();
         history.push("/login");
     }
@@ -90,22 +92,46 @@ export default function Menu(): React.ReactElement {
         )
     }
 
-    const NavLink = ({ children }: { children: any }) => (
-        <Box
-            sx={{cursor: "pointer"}}
-            px={2}
-            py={1}
-            key={children.href}
-            rounded={'md'}
-            _hover={{
-                textDecoration: 'none',
-                bg: useColorModeValue('gray.200', 'gray.700'),
-            }}
-            onClick={() => handleGoTo(children.href)}
-        >
-            {children.label}
-        </Box>
-    );
+    const NavLink = ({ children }: { children: any }) => {
+        const backgroud = useColorModeValue('gray.200', 'gray.700');
+        if (children.isAdmin) {
+            if (signed && user.roles.find((x: any) => x == "Admin") != null) {
+                return (
+                    <Box
+                        sx={{ cursor: "pointer" }}
+                        px={2}
+                        py={1}
+                        key={children.href}
+                        rounded={'md'}
+                        _hover={{
+                            textDecoration: 'none',
+                            bg: backgroud,
+                        }}
+                        onClick={() => handleGoTo(children.href)}
+                    >
+                        {children.label}
+                    </Box>
+                );
+            }
+            return null;
+        }
+        return (
+            <Box
+                sx={{ cursor: "pointer" }}
+                px={2}
+                py={1}
+                key={children.href}
+                rounded={'md'}
+                _hover={{
+                    textDecoration: 'none',
+                    bg: backgroud,
+                }}
+                onClick={() => handleGoTo(children.href)}
+            >
+                {children.label}
+            </Box>
+        )
+    };
 
 
     return (
@@ -113,19 +139,19 @@ export default function Menu(): React.ReactElement {
             <Box sx={{ color: "#fff" }} bg={useColorModeValue('gray.700', 'gray.900')} px={4}>
                 <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
                     <HStack spacing={8} alignItems={'center'}>
-                        <Box>Logo</Box>
-                        <HStack
+                        <Box><Image style={{width:'50px', borderRadius:'20%' }} src={logo}></Image></Box>
+                        {signed ? <HStack
                             as={'nav'}
                             spacing={4}
                             display={{ base: 'none', md: 'flex' }}>
                             {Links.map((link) => (
                                 <NavLink key={link.href} >{link}</NavLink>
                             ))}
-                        </HStack>
+                        </HStack> : null}
                     </HStack>
                     <Flex alignItems={'center'}>
                         <UserMenu></UserMenu>
-                        <Button
+                        {signed ? <Button
                             position="relative"
                             type="button"
                             onClick={onOpen}
@@ -150,7 +176,7 @@ export default function Menu(): React.ReactElement {
                                     {cart.length}
                                 </Text>
                             )}
-                        </Button>
+                        </Button> : null}
                     </Flex>
                 </Flex>
             </Box>

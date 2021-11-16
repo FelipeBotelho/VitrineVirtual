@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/auth';
 
 import { RouteComponentProps } from "react-router-dom";
 import './styles.css'
+import logo from "../../assets/images/logo.jpg";
 
 interface RouterProps {
   history: string;
@@ -53,7 +54,7 @@ const Login: React.FC<Props> = ({ history }) => {
     <div className="col-md-12">
       <div className="card card-container">
         <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+          src= {logo}
           alt="profile-img"
           className="profile-img-card"
         />

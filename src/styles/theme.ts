@@ -40,7 +40,7 @@ export const theme = extendTheme({
   styles: {
     global: {
       body: {
-        bg: "gray.300",
+        bg: "#473c381c",
       },
 
       label: {

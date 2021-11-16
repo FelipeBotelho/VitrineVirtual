@@ -15,16 +15,27 @@ import { currencyFormatter } from "../../utils/formatter";
 import ProductModal from "../modal";
 import { ProductModel } from "../../types/products";
 import { useCart } from "../../contexts/cart";
-
+import { useAuth } from '../../contexts/auth';
+import { useHistory } from "react-router-dom";
 interface CardProps {
     product: ProductModel;
 }
 
 export default function Card({ product }: CardProps): React.ReactElement {
     const PropsModal = useDisclosure();
+    const history = useHistory();
+    const {signed } = useAuth();
     const { handleAddCart } = useCart();
     const { onOpen } = PropsModal;
     const { foto, nome, preco, quantidade, id } = product;
+
+    const addCard = (id: number) => {
+        if(!signed){
+            history.push("/login");
+        }else{
+            handleAddCart(id)
+        }
+    }
 
     return (
         <>
@@ -101,7 +112,7 @@ export default function Card({ product }: CardProps): React.ReactElement {
                         colorScheme="red"
                         borderRadius="0"
                         disabled={quantidade === 0}
-                        onClick={() => handleAddCart(id)}
+                        onClick={() => addCard(id)}
                     >
                         <Icon as={RiShoppingCartLine} mr="10px" /> Comprar
                     </Button>
