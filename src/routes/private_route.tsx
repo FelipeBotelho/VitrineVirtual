@@ -4,7 +4,6 @@ import { useAuth } from "../contexts/auth";
 
 function PrivateRoute({ component: Component, ...rest }: any) {
     const { signed, user } = useAuth();
-  debugger;
   return (
     <Route
       {...rest}

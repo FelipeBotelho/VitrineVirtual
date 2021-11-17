@@ -13,10 +13,14 @@ import {
     ModalBody,
     Text,
     Stack,
+    Tooltip,
 } from "@chakra-ui/react";
 import React from "react";
-import { RiShoppingCartLine } from "react-icons/ri";
+import { RiShoppingCartLine, RiThumbUpFill, RiThumbUpLine } from "react-icons/ri";
+import { useHistory } from "react-router-dom";
+import { useAuth } from "../../contexts/auth";
 import { useCart } from "../../contexts/cart";
+import { useProducts } from "../../contexts/products";
 
 import { ProductModel } from "../../types/products";
 import { currencyFormatter } from "../../utils/formatter";
@@ -24,15 +28,19 @@ import { currencyFormatter } from "../../utils/formatter";
 interface ProductModalProps {
     product: ProductModel;
     modalProps: UseDisclosureProps;
+    isFavorito: boolean;
 }
 
 export default function ProductModal({
     product,
     modalProps,
+    isFavorito
 }: ProductModalProps) {
     const { handleAddCart } = useCart();
+    const { favoritarProduto, desfavoritarProduto, obterFavoritos, obterUltimoIdFavorito } = useProducts();
+    const { signed, user } = useAuth();
+    const history = useHistory();
     const { isOpen, onClose } = modalProps;
-
     const {
         descricao,
         nome,
@@ -41,6 +49,45 @@ export default function ProductModal({
         quantidade,
         id,
     } = product;
+
+    const handleAddFavorito = async (id: number) => {
+        debugger;
+        if (!signed) {
+            history.push("/login");
+            return;
+        }
+        const favoritos = await obterFavoritos(user.id);
+        let obj = {};
+        if (favoritos.length > 0) {
+            const lastId = favoritos.sort(function (a: any, b: any) {
+                return a.id > b.id ? -1 : a.id < b.id ? 1 : 0;
+            })[0].id;
+            obj = {
+                id: lastId + 1,
+                idProduto: id,
+                idUsuario: user.id
+            }
+        } else {
+            var lastIdForAll = await obterUltimoIdFavorito();
+            obj = {
+                id: lastIdForAll +1,
+                idProduto: id,
+                idUsuario: user.id
+            }
+        }
+        await favoritarProduto(obj);
+    }
+
+    const handleRemoveFavorito = async (id: number) => {
+        if (!signed) {
+            history.push("/login");
+            return;
+        }
+        const favoritos = await obterFavoritos(user.id);
+        const favorito = favoritos.find((x:any) => x.idProduto == id && x.idUsuario == user.id).id;
+        await desfavoritarProduto(favorito);
+    }
+
     return (
         <>
             <Modal
@@ -77,16 +124,32 @@ export default function ProductModal({
                                         10 x {currencyFormatter((preco / 10).toFixed(2))}
                                     </Text>
                                 </Text>
+                                <div style={{ display: "flex", margin: "0", padding: "0" }}>
+                                    <Button
+                                        style={{ width: "79%" }}
+                                        m="25px 5px 10px 0px"
+                                        color="white"
+                                        colorScheme="red"
+                                        disabled={quantidade === 0}
+                                        onClick={() => handleAddCart(id)}
+                                    >
+                                        <Icon as={RiShoppingCartLine} mr="10px" /> Comprar
+                                    </Button>
 
-                                <Button
-                                    m="25px 0 10px !important"
-                                    color="white"
-                                    colorScheme="red"
-                                    disabled={quantidade === 0}
-                                    onClick={() => handleAddCart(id)}
-                                >
-                                    <Icon as={RiShoppingCartLine} mr="10px" /> Comprar
-                                </Button>
+                                    <Tooltip label={isFavorito ? "Desfavoritar Item" : "Favoritar Item"}>
+                                        <Button
+                                            style={{ width: "20%" }}
+                                            m="25px 0 10px !important"
+                                            color="white"
+                                            colorScheme="red"
+                                            disabled={quantidade === 0}
+                                            onClick={() => isFavorito ? handleRemoveFavorito(id) : handleAddFavorito(id)}
+                                        >
+                                            <Icon as={isFavorito ? RiThumbUpLine : RiThumbUpFill} mr="10px" />
+                                        </Button>
+                                    </Tooltip>
+                                </div>
+
 
                                 <Divider />
 

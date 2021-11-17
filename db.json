@@ -35,6 +35,13 @@
       "password": "feijao"
     }
   ],
+  "favorito": [
+    {
+      "id": 3,
+      "idProduto": 2,
+      "idUsuario": 2
+    }
+  ],
   "products": [
     {
       "id": 1,

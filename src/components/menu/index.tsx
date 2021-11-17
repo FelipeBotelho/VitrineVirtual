@@ -78,8 +78,8 @@ export default function Menu(): React.ReactElement {
                     </MenuButton>
                     <MenuList sx={{ color: "#000" }}>
                         <MenuGroup title="Profile">
-                            <MenuItem>Minha Conta</MenuItem>
-                            <MenuItem>Meus Pedidos </MenuItem>
+                            <MenuItem onClick={()=>handleGoTo("/favoritos")}>Meus Favoritos</MenuItem>
+                            <MenuItem>Meus Pedidos</MenuItem>
                         </MenuGroup>
                         <MenuDivider />
                         <MenuGroup title="Session">

@@ -19,9 +19,10 @@ import { useAuth } from '../../contexts/auth';
 import { useHistory } from "react-router-dom";
 interface CardProps {
     product: ProductModel;
+    isFavorito: boolean;
 }
 
-export default function Card({ product }: CardProps): React.ReactElement {
+export default function Card({ product, isFavorito }: CardProps): React.ReactElement {
     const PropsModal = useDisclosure();
     const history = useHistory();
     const {signed } = useAuth();
@@ -39,7 +40,7 @@ export default function Card({ product }: CardProps): React.ReactElement {
 
     return (
         <>
-            <ProductModal product={product} modalProps={PropsModal} />
+            <ProductModal isFavorito={isFavorito} product={product} modalProps={PropsModal} />
             <Box
                 position="relative"
                 maxW="sm"
@@ -116,7 +117,7 @@ export default function Card({ product }: CardProps): React.ReactElement {
                     >
                         <Icon as={RiShoppingCartLine} mr="10px" /> Comprar
                     </Button>
-                </Box>
+                 </Box>
             </Box>
         </>
     );

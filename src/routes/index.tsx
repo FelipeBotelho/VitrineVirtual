@@ -5,6 +5,7 @@ import ConstantRoutes from "./routes_array";
 import Admin from "../pages/Admin";
 import ErrorPage from "../pages/Error";
 import { useAuth } from "../contexts/auth";
+import Favoritos from "../pages/Favoritos";
 
 export default function Routes(): React.ReactElement {
   const { signed, user } = useAuth();
@@ -18,6 +19,7 @@ export default function Routes(): React.ReactElement {
         <HandleRoutes {...route} key={route.path} />
       ))}
       {signed && user.roles.find((x: any) => x == "Admin") != null ? <Route path="/admin" component={Admin} /> : null}
+      {signed ? <Route path="/favoritos" component={Favoritos} /> : null}
       <Route path="*">
         <ErrorPage />
       </Route>

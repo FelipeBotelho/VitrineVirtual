@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from "axios";
-import { useCart } from './cart';
 
 interface AuthContextData {
   signed: boolean;
@@ -27,7 +26,6 @@ export const AuthProvider: React.FC = ({ children }) => {
 
   async function Login(userData: any) {
     const response: any = await axios.get(`${API_URL}/profile?user=${userData.user}&password=${userData.password}`);
-    debugger;
     if (!response.data || response.data.length == 0) {
       return false;
     }

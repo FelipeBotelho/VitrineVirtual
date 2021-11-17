@@ -1,11 +1,29 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Stack, Heading, SimpleGrid } from "@chakra-ui/react";
 
 import Card from "../../components/card";
 import { useProducts } from "../../contexts/products";
+import { useAuth } from "../../contexts/auth";
 
 const ListProducts: React.FC = () => {
-  const { products } = useProducts();
+  const { products, obterFavoritos } = useProducts();
+  const { signed, user } = useAuth();
+  const [favoritos, setFavoritos] = useState([]);
+
+  useEffect(() => {
+    async function fetch() {
+      if (signed) {
+
+        const valores = await obterFavoritos(user.id);
+        if (valores.length > 0)
+          setFavoritos(valores);
+        else 
+          setFavoritos([]);
+      }
+    }
+    fetch();
+  }, [obterFavoritos, signed, user])
+
 
   return (
     <>
@@ -22,9 +40,11 @@ const ListProducts: React.FC = () => {
             Produtos
           </Heading>
           <SimpleGrid columns={4} spacing={10}>
-            {products.map((item) => (
-              <Card key={item.id} product={item} />
-            ))}
+            {products.map((item) => {
+              return (
+                <Card key={item.id} product={item} isFavorito={favoritos.length > 0 && favoritos.find((x: any) => x.idProduto == item.id) != null} />
+              )
+            })}
           </SimpleGrid>
         </Stack>
       </Box>

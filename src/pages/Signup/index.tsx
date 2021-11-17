@@ -22,7 +22,6 @@ const Signup: React.FC<Props> = ({ history }) => {
   const toast = useToast();
 
   useEffect(() => {
-    debugger;
     (async () => {
       const lastId = await GetLastId();
       setId(lastId + 1);
