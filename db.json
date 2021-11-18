@@ -40,57 +40,130 @@
       "id": 3,
       "idProduto": 2,
       "idUsuario": 2
-    }
-  ],
-  "compras":[
-    {
-      "idUsuario":2,
-      "idPagamento":1,
-      "enderecoEntrega":"Rua das Alamedas 260",
-      "cidadeEntrega":"Araraquara",
-      "cepEntrega":"14841102",
-      "total":200,
-      "compra":[{
-        "idProduto":1,
-        "quantidade":5
-      },
-      {
-        "idProduto":2,
-        "quantidade":2
-      }]
-    }
-  ],
-  "pagamentos":[
-    {
-      "id":1,
-      "meio":"Cartão"
     },
     {
-      "id":2,
-      "meio":"Boleto"
-    },
-    {
-      "id":3,
-      "meio":"Pix"
+      "id": 4,
+      "idProduto": 1,
+      "idUsuario": 2
     }
   ],
-
+  "compras": [
+    {
+      "idUsuario": 1,
+      "idPagamento": 2,
+      "dataCompra": "18/11/2021",
+      "enderecoEntrega": "Rua dos Jacarandas, 260",
+      "cidadeEntrega": "Matão",
+      "cepEntrega": "15995-020",
+      "total": 40,
+      "compra": [
+        {
+          "idProduto": 1,
+          "quantidade": 2
+        }
+      ],
+      "id": 1
+    },
+    {
+      "idUsuario": 2,
+      "idPagamento": 3,
+      "dataCompra": "18/11/2021",
+      "enderecoEntrega": "Rua dos Jacarandas, 260",
+      "cidadeEntrega": "Matão",
+      "cepEntrega": "15995-020",
+      "total": 160,
+      "compra": [
+        {
+          "idProduto": 1,
+          "quantidade": 8
+        }
+      ],
+      "id": 2
+    },
+    {
+      "idUsuario": 2,
+      "idPagamento": 1,
+      "dataCompra": "18/11/2021",
+      "enderecoEntrega": "Rua dos Jacarandas, 260",
+      "cidadeEntrega": "Matão",
+      "cepEntrega": "15995-020",
+      "total": 35.5,
+      "compra": [
+        {
+          "idProduto": 2,
+          "quantidade": 1
+        }
+      ],
+      "id": 3
+    },
+    {
+      "idUsuario": 2,
+      "idPagamento": 2,
+      "dataCompra": "18/11/2021",
+      "enderecoEntrega": "Rua dos Jacarandas, 260",
+      "cidadeEntrega": "Matão",
+      "cepEntrega": "15995-020",
+      "total": 35.5,
+      "compra": [
+        {
+          "idProduto": 2,
+          "quantidade": 1
+        }
+      ],
+      "id": 4
+    },
+    {
+      "idUsuario": 2,
+      "idPagamento": 2,
+      "dataCompra": "18/11/2021",
+      "enderecoEntrega": "Rua dos Jacarandas, 260",
+      "cidadeEntrega": "Matão",
+      "cepEntrega": "15995-020",
+      "total": 90.5,
+      "compra": [
+        {
+          "idProduto": 2,
+          "quantidade": 1
+        },
+        {
+          "idProduto": 3,
+          "quantidade": 1
+        }
+      ],
+      "id": 5
+    }
+  ],
+  "pagamentos": [
+    {
+      "id": 1,
+      "meio": "Cartão"
+    },
+    {
+      "id": 2,
+      "meio": "Boleto"
+    },
+    {
+      "id": 3,
+      "meio": "Pix"
+    }
+  ],
   "products": [
     {
       "id": 1,
       "nome": "Mozzarela de búfala",
       "preco": 20,
-      "foto": "https://www.terra.com.br/culinaria/infograficos/tipos-de-queijos/galeria/fotos/tipos-de-queijos-1.jpg",
       "descricao": "Um queijo fresco , levemente adocicado",
-      "quantidade": 10
+      "foto": "https://www.terra.com.br/culinaria/infograficos/tipos-de-queijos/galeria/fotos/tipos-de-queijos-1.jpg",
+      "quantidade": 8
     },
     {
       "id": 2,
       "nome": "Brie",
-      "preco": 35,
-      "foto": "https://www.terra.com.br/culinaria/infograficos/tipos-de-queijos/galeria/fotos/tipos-de-queijos-3.jpg",
+      "preco": 35.5,
       "descricao": "Um sabor suave e intenso",
-      "quantidade": 10
+      "foto": "https://www.terra.com.br/culinaria/infograficos/tipos-de-queijos/galeria/fotos/tipos-de-queijos-3.jpg",
+      "quantidade": 7,
+      "rate": 6
     },
     {
       "id": 3,

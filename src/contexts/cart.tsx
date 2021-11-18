@@ -14,6 +14,7 @@ interface ContextModel {
   handleRemoveCart: Function;
   disclosure: UseDisclosureProps;
   cleanCart: Function;
+  handleAddListCart: Function;
 }
 
 const CartContext = createContext<ContextModel>({} as ContextModel);
@@ -45,8 +46,12 @@ const CartProvider: React.FC = ({ children }) => {
   }
 
   const handleAddCart = (id: number) => {
+    debugger;
     const productIndex = products.findIndex((item) => item.id === id);
     const oldProduct = products[productIndex];
+    if (oldProduct.quantidade == 0) {
+      return;
+    }
     const updatedProduct = { ...oldProduct, quantidade: oldProduct.quantidade - 1 };
     const cloneProduct = [...products];
     cloneProduct[productIndex] = updatedProduct;
@@ -68,6 +73,33 @@ const CartProvider: React.FC = ({ children }) => {
     toast(addCartToast);
     setCart(cloneCart);
   };
+
+  const handleAddListCart = (ids: number[]) => {
+    const product: any = [];
+    ids.forEach(id => {
+
+      const productIndex = products.findIndex((item) => item.id === id);
+      const oldProduct = products[productIndex];
+      debugger;
+      if (oldProduct.quantidade == 0) {
+        return;
+      }
+      const updatedProduct = { ...oldProduct, quantidade: oldProduct.quantidade - 1 };
+      const cloneProduct = [...products];
+      cloneProduct[productIndex] = updatedProduct;
+      setProducts(cloneProduct);
+      const getProduct = products[productIndex];
+      const productToAdd = { ...getProduct, quantidade: 1 };
+      product.push(productToAdd);
+    });
+    if (product.length > 0) {
+
+      toast(addCartToast);
+      return setCart(product);
+    }
+  }
+
+
 
   const handleRemoveCart = (id: number) => {
     const productIndex = products.findIndex((item) => item.id === id);
@@ -95,7 +127,7 @@ const CartProvider: React.FC = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ cart, disclosure, handleAddCart, handleRemoveCart, cleanCart }}
+      value={{ cart, disclosure, handleAddCart, handleRemoveCart, cleanCart, handleAddListCart }}
     >
       {children}
     </CartContext.Provider>
@@ -104,8 +136,8 @@ const CartProvider: React.FC = ({ children }) => {
 
 function useCart(): ContextModel {
   const context = useContext(CartContext);
-  const { cart, disclosure, handleAddCart, handleRemoveCart, cleanCart } = context;
-  return { cart, disclosure, handleAddCart, handleRemoveCart, cleanCart };
+  const { cart, disclosure, handleAddCart, handleRemoveCart, cleanCart, handleAddListCart } = context;
+  return { cart, disclosure, handleAddCart, handleRemoveCart, cleanCart, handleAddListCart };
 }
 
 export { CartProvider, useCart };

@@ -142,7 +142,6 @@ export default function ProductModal({
                                             m="25px 0 10px !important"
                                             color="white"
                                             colorScheme="red"
-                                            disabled={quantidade === 0}
                                             onClick={() => isFavorito ? handleRemoveFavorito(id) : handleAddFavorito(id)}
                                         >
                                             <Icon as={isFavorito ? RiThumbUpLine : RiThumbUpFill} mr="10px" />

@@ -12,7 +12,7 @@ import { ProductModel } from "../types/products";
 interface ContextModel {
     products: ProductModel[];
     setProducts: Function;
-    addProduct:  any;
+    addProduct: any;
     editProduct: any;
     deleteProduct: any;
     obterFavoritos: any;
@@ -20,6 +20,8 @@ interface ContextModel {
     favoritarProduto: any;
     desfavoritarProduto: any;
     obterUltimoIdFavorito: any;
+    realizarCompra: any;
+    obterUltimasCompras: any;
 }
 
 const ProductsContext = createContext<ContextModel>({} as ContextModel);
@@ -29,7 +31,7 @@ const ProductsProvider: React.FC = ({ children }) => {
     const [products, setProducts] = useState(new Array<ProductModel>());
 
 
-    async function addProduct(product: any){
+    async function addProduct(product: any) {
         try {
             await castApi.post(`products/`, product);
             await loadData();
@@ -39,7 +41,7 @@ const ProductsProvider: React.FC = ({ children }) => {
         }
     }
 
-    async function editProduct(product: any){
+    async function editProduct(product: any) {
         try {
             await castApi.put(`products/${product.id}`, product);
             await loadData();
@@ -49,7 +51,7 @@ const ProductsProvider: React.FC = ({ children }) => {
         }
     }
 
-    async function deleteProduct(product: any){
+    async function deleteProduct(product: any) {
         try {
             await castApi.delete(`products/${product.id}`)
             await loadData();
@@ -59,16 +61,16 @@ const ProductsProvider: React.FC = ({ children }) => {
         }
     }
 
-    async function obterFavoritos(idUsuario: number){
-        try{
+    async function obterFavoritos(idUsuario: number) {
+        try {
             const valores = await castApi.get(`favorito?idUsuario=${idUsuario}`);
             return valores.data;
-        }catch(error){
+        } catch (error) {
             return null;
         }
     }
 
-    async function obterUltimoIdFavorito(){
+    async function obterUltimoIdFavorito() {
         try {
             const valores: any = await castApi.get(`favorito?_sort=id&_order=desc`);
             return valores.data[0].id;
@@ -77,9 +79,9 @@ const ProductsProvider: React.FC = ({ children }) => {
         }
     }
 
-    async function favoritarProduto(objeto: any){
+    async function favoritarProduto(objeto: any) {
         try {
-            await castApi.post(`favorito/`,objeto);
+            await castApi.post(`favorito/`, objeto);
             await loadData();
             return true;
         } catch (error) {
@@ -87,7 +89,7 @@ const ProductsProvider: React.FC = ({ children }) => {
         }
     }
 
-    async function desfavoritarProduto(idFavorito: number){
+    async function desfavoritarProduto(idFavorito: number) {
         try {
             await castApi.delete(`favorito/${idFavorito}`);
             await loadData();
@@ -97,19 +99,48 @@ const ProductsProvider: React.FC = ({ children }) => {
         }
     }
 
-    async function obterProdutosPorListaId(listaId:number[]){
+    async function obterProdutosPorListaId(listaId: number[]) {
         try {
             let stringRequest = "";
-            if(listaId.length==1){
+            if (listaId.length == 1) {
                 stringRequest = `?id=${listaId[0]}`;
-            }else{
+            } else {
                 stringRequest = `?id=${listaId[0]}`;
-                for(var i = 1; i < listaId.length; i++){
-                    stringRequest+= `&id=${listaId[i]}`
+                for (var i = 1; i < listaId.length; i++) {
+                    stringRequest += `&id=${listaId[i]}`
                 }
             }
             const produtos = await castApi.get(`products${stringRequest}`);
             return produtos.data;
+        } catch (error) {
+            return [];
+        }
+    }
+
+    async function realizarCompra(compra: any) {
+        try {
+            debugger;
+            await castApi.post(`compras/`, compra);
+
+            //atualizar quantidades dos produtos comprados
+            compra.compra.forEach(async (element: any) => {
+                let produto = products.find(x => x.id == element.idProduto);
+                if (produto) {
+                    await castApi.put(`products/${produto.id}`, produto);
+                }
+            });
+
+            return true;
+        } catch (error) {
+            console.log(error);
+            return false;
+        }
+    }
+
+    async function obterUltimasCompras(idUsuario: number){
+        try {
+            const valores = await castApi.get(`compras?idUsuario=${idUsuario}&_sort=id&_order=desc`);
+            return valores.data;
         } catch (error) {
             return [];
         }
@@ -130,7 +161,7 @@ const ProductsProvider: React.FC = ({ children }) => {
     }, []);
 
     return (
-        <ProductsContext.Provider value={{ products, setProducts, addProduct,editProduct, deleteProduct, obterFavoritos, obterProdutosPorListaId, favoritarProduto, desfavoritarProduto, obterUltimoIdFavorito }}>
+        <ProductsContext.Provider value={{ products, setProducts, addProduct, editProduct, deleteProduct, obterFavoritos, obterProdutosPorListaId, favoritarProduto, desfavoritarProduto, obterUltimoIdFavorito, realizarCompra, obterUltimasCompras }}>
             {children}
         </ProductsContext.Provider>
     );
@@ -138,7 +169,7 @@ const ProductsProvider: React.FC = ({ children }) => {
 
 function useProducts(): ContextModel {
     const context = useContext(ProductsContext);
-    const { products, setProducts, addProduct, editProduct, deleteProduct, obterFavoritos, obterProdutosPorListaId, favoritarProduto, desfavoritarProduto, obterUltimoIdFavorito } = context;
-    return { products, setProducts, addProduct, editProduct, deleteProduct, obterFavoritos, obterProdutosPorListaId, favoritarProduto, desfavoritarProduto, obterUltimoIdFavorito };
+    const { products, setProducts, addProduct, editProduct, deleteProduct, obterFavoritos, obterProdutosPorListaId, favoritarProduto, desfavoritarProduto, obterUltimoIdFavorito, realizarCompra, obterUltimasCompras } = context;
+    return { products, setProducts, addProduct, editProduct, deleteProduct, obterFavoritos, obterProdutosPorListaId, favoritarProduto, desfavoritarProduto, obterUltimoIdFavorito, realizarCompra, obterUltimasCompras };
 }
 export { ProductsProvider, useProducts };

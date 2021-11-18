@@ -1,6 +1,6 @@
 import { Box, Flex, Heading, Stack } from "@chakra-ui/layout";
-import { Button, Icon, Image, Stat, StatLabel, StatNumber, Text } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { Button, Icon, Image, Stat, StatLabel, StatNumber, Text, useToast, UseToastOptions } from "@chakra-ui/react";
+import React, { useState } from "react";
 import { useCart } from "../../contexts/cart";
 import { useProducts } from "../../contexts/products";
 import { IoIosRemove, IoIosAdd } from "react-icons/io";
@@ -16,13 +16,13 @@ export default function Comprar() {
         cart,
         handleRemoveCart,
         handleAddCart,
+        cleanCart
     } = useCart();
-    const { products } = useProducts();
+    const { products, realizarCompra } = useProducts();
     const [loading, setLoading] = useState<boolean>(false);
-
+    const [idPagamento, setIdPagamento] = useState<number>(1);
     const { user } = useAuth();
-
-    const [detalhesCompra, setDetalhesCompra] = useState([]);
+    const toast = useToast();
 
     const dadosPagamento = {
         idUsuario: user.id,
@@ -30,15 +30,11 @@ export default function Comprar() {
         enderecoEntrega: "",
         cidadeEntrega: "",
         cepEntrega: "",
-        total:0,
+        numeroCartao: "",
+        codigoSeguranca: "",
+        total: 0,
         compra: []
     }
-
-    useEffect(() => {
-        const compra: any = obterDetalhesCompra();
-        setDetalhesCompra(compra);
-        console.log(compra);
-    }, [cart])
 
     const obterDetalhesCompra = () => {
         let compra: any[] = [];
@@ -52,11 +48,10 @@ export default function Comprar() {
     }
 
     const validationSchema = Yup.object().shape({
-        nome: Yup.string().required("Este campo é obrigatório!"),
-        preco: Yup.number().required("Este campo é obrigatório!"),
-        foto: Yup.string().required("Este campo é obrigatório!"),
-        descricao: Yup.string().required("Este campo é obrigatório!"),
-        quantidade: Yup.number().required("Este campo é obrigatório!"),
+        enderecoEntrega: Yup.string().required("Este campo é obrigatório!"),
+        cidadeEntrega: Yup.string().required("Este campo é obrigatório!"),
+        cepEntrega: Yup.string().required("Este campo é obrigatório!"),
+        idPagamento: Yup.number().required("Este campo é obrigatório!")
     });
 
     const handleDisabled = (id: number) => {
@@ -68,6 +63,27 @@ export default function Comprar() {
         return false;
     };
 
+    const addCompra: UseToastOptions = {
+        title: (idPagamento == 2 ? "Compra realizada com sucesso. Aguarde o envio do boleto no seu email para realizar o pagamento." : (idPagamento == 3 ? "Compra realizada com sucesso. Aguarde o envio da chave pix para pagamento no seu email." : "Compra realizada com sucesso!")),
+        status: "success",
+        position: "top",
+        duration: 5000,
+        isClosable: true,
+    };
+
+    const errCompra: UseToastOptions = {
+        title: "Ocorreu um erro ao finalizar sua compra, tente novamente mais tarde",
+        status: "error",
+        position: "top",
+        duration: 5000,
+        isClosable: true,
+    };
+
+    const handleChangePagamento = (e: any) => {
+        const selected = e.target.value;
+        setIdPagamento(+selected);
+    }
+
     const obterValorTotal = () => {
         let ValorFinal = 0;
         cart.forEach(element => {
@@ -76,10 +92,40 @@ export default function Comprar() {
         return ValorFinal;
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async (formValue: {
+        idUsuario: number,
+        idPagamento: number,
+        enderecoEntrega: string,
+        cidadeEntrega: string,
+        cepEntrega: string,
+        numeroCartao: string,
+        codigoSeguranca: string,
+        total: number,
+        compra: any
+    }) => {
+        const { enderecoEntrega, cidadeEntrega, cepEntrega } = formValue;
 
+        setLoading(true);
+        const obj = {
+            "idUsuario": user.id,
+            "idPagamento": idPagamento,
+            "dataCompra": new Date().toLocaleDateString(),
+            "enderecoEntrega": enderecoEntrega,
+            "cidadeEntrega": cidadeEntrega,
+            "cepEntrega": cepEntrega,
+            "total": obterValorTotal(),
+            "compra": obterDetalhesCompra()
+        };
+
+        const result = await realizarCompra(obj);
+        setLoading(false);
+        if (result) {
+            cleanCart();
+            toast(addCompra);
+        } else {
+            toast(errCompra);
+        }
     }
-
 
     return (
         cart.length > 0 ?
@@ -94,7 +140,7 @@ export default function Comprar() {
                     >
                         Dados de Pagamento
                     </Heading>
-                    {/* <Formik
+                    <Formik
                         initialValues={dadosPagamento}
                         validationSchema={validationSchema}
                         onSubmit={handleSubmit}
@@ -102,55 +148,64 @@ export default function Comprar() {
                         <Form>
 
                             <div className="form-group">
-                                <label htmlFor="nome">Nome do Produto</label>
-                                <Field name="nome" type="text" className="form-control" />
+                                <label htmlFor="enderecoEntrega">Endereco de Entrega</label>
+                                <Field name="enderecoEntrega" type="text" className="form-control" />
                                 <ErrorMessage
-                                    name="nome"
+                                    name="enderecoEntrega"
                                     component="div"
                                     className="alert alert-danger"
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="preco">Preço</label>
-                                <Field name="preco" type="number" className="form-control" />
+                                <label htmlFor="cidadeEntrega">Cidade</label>
+                                <Field name="cidadeEntrega" type="text" className="form-control" />
                                 <ErrorMessage
-                                    name="preco"
+                                    name="cidadeEntrega"
                                     component="div"
                                     className="alert alert-danger"
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="descricao">Descrição do Produto</label>
-                                <Field name="descricao" as="textarea" type="text" className="form-control" />
+                                <label htmlFor="cepEntrega">CEP</label>
+                                <Field name="cepEntrega" type="text" className="form-control" />
                                 <ErrorMessage
-                                    name="descricao"
+                                    name="cepEntrega"
                                     component="div"
                                     className="alert alert-danger"
                                 />
                             </div>
 
                             <div className="form-group">
-                                <label htmlFor="foto">Url da Imagem</label>
-                                <Field name="foto" type="tex" className="form-control" />
+                                <label htmlFor="idPagamento">Tipo de Pagamento</label>
+                                <Field name="idPagamento" value={idPagamento} as="select" className="form-control" onChange={handleChangePagamento}>
+                                    <option value="1" >Cartão</option>
+                                    <option value="2" >Boleto</option>
+                                    <option value="3" >Pix</option>
+                                </Field>
                                 <ErrorMessage
-                                    name="foto"
+                                    name="idPagamento"
                                     component="div"
                                     className="alert alert-danger"
                                 />
-                            </div>
+                                {idPagamento == 1 &&
+                                    <>
+                                        <div className="col-12" style={{ padding: 0, display: "flex" }}>
 
-                            <div className="form-group">
-                                <label htmlFor="quantidade">Quantidade em Estoque</label>
-                                <Field name="quantidade" type="number" className="form-control" />
-                                <ErrorMessage
-                                    name="quantidade"
-                                    component="div"
-                                    className="alert alert-danger"
-                                />
-                            </div>
+                                            <div className="col-8" style={{ margin: 0, paddingLeft: 0 }}>
+                                                <label htmlFor="numeroCartao">Número do Cartão</label>
+                                                <Field name="numeroCartao" type="text" className="form-control" />
+                                            </div>
+                                            <div className="col-4" style={{ padding: 0, margin: 0 }}>
+                                                <label htmlFor="codigoSeguranca">Código de Segurança</label>
+                                                <Field name="codigoSeguranca" type="text" className="form-control" />
+                                            </div>
+                                        </div>
 
+                                    </>
+                                }
+                            </div>
                             <div className="form-group">
                                 <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
                                     {loading && (
@@ -162,10 +217,7 @@ export default function Comprar() {
 
 
                         </Form>
-                    </Formik> */}
-                    <div className="col-12">
-
-                    </div>
+                    </Formik>
                 </div>
                 <div className="col col-6">
                     <Heading
