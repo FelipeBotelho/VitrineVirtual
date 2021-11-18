@@ -6,6 +6,8 @@ import Admin from "../pages/Admin";
 import ErrorPage from "../pages/Error";
 import { useAuth } from "../contexts/auth";
 import Favoritos from "../pages/Favoritos";
+import Historico from "../pages/Historico";
+import Comprar from "../pages/Comprar";
 
 export default function Routes(): React.ReactElement {
   const { signed, user } = useAuth();
@@ -20,6 +22,8 @@ export default function Routes(): React.ReactElement {
       ))}
       {signed && user.roles.find((x: any) => x == "Admin") != null ? <Route path="/admin" component={Admin} /> : null}
       {signed ? <Route path="/favoritos" component={Favoritos} /> : null}
+      {signed ? <Route path="/historico" component={Historico} /> : null}
+      {signed ? <Route path="/comprar" component={Comprar} /> : null}
       <Route path="*">
         <ErrorPage />
       </Route>

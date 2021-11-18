@@ -19,6 +19,7 @@ import { RiShoppingCartLine } from "react-icons/ri";
 import { IoIosRemove, IoIosAdd } from "react-icons/io";
 import { useProducts } from "../../contexts/products";
 import { useCart } from "../../contexts/cart";
+import { useHistory } from "react-router";
 
 
 export default function Cart(): React.ReactElement {
@@ -28,6 +29,7 @@ export default function Cart(): React.ReactElement {
         handleRemoveCart,
         handleAddCart,
     } = useCart();
+    const history = useHistory();
     const { products } = useProducts();
 
     const handleClose = () => {
@@ -45,6 +47,11 @@ export default function Cart(): React.ReactElement {
 
         return false;
     };
+
+    const handleComprar = () => {
+        handleClose();
+        history.push("/comprar");
+    }
 
     return (
         <>
@@ -133,6 +140,9 @@ export default function Cart(): React.ReactElement {
                                         </Stack>
                                     </Box>
                                 ))}
+                                <button type="button" onClick={handleComprar} className="btn btn-success btn-block" >
+                                    <span>Finalizar a Compra</span>
+                                </button>
                             </Stack>
                         )}
                     </DrawerBody>

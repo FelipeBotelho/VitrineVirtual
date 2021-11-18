@@ -42,6 +42,39 @@
       "idUsuario": 2
     }
   ],
+  "compras":[
+    {
+      "idUsuario":2,
+      "idPagamento":1,
+      "enderecoEntrega":"Rua das Alamedas 260",
+      "cidadeEntrega":"Araraquara",
+      "cepEntrega":"14841102",
+      "total":200,
+      "compra":[{
+        "idProduto":1,
+        "quantidade":5
+      },
+      {
+        "idProduto":2,
+        "quantidade":2
+      }]
+    }
+  ],
+  "pagamentos":[
+    {
+      "id":1,
+      "meio":"Cartão"
+    },
+    {
+      "id":2,
+      "meio":"Boleto"
+    },
+    {
+      "id":3,
+      "meio":"Pix"
+    }
+  ],
+
   "products": [
     {
       "id": 1,
