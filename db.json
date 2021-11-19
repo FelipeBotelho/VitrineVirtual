@@ -45,6 +45,11 @@
       "id": 4,
       "idProduto": 1,
       "idUsuario": 2
+    },
+    {
+      "id": 5,
+      "idProduto": 1,
+      "idUsuario": 1
     }
   ],
   "compras": [

@@ -1,5 +1,6 @@
 import { Box, Heading, SimpleGrid, Stack } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
+import Banner from "../../components/banner";
 import Card from "../../components/card";
 import { useAuth } from "../../contexts/auth";
 import { useProducts } from "../../contexts/products";
@@ -25,6 +26,7 @@ function Favoritos(){
     },[obterFavoritos, obterProdutosPorListaId, user])
     return (
         <>
+        <Banner/>
         <Box as="main">
           <Stack spacing="md">
             <Heading

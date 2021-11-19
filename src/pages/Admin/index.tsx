@@ -32,6 +32,7 @@ import { useProducts } from "../../contexts/products";
 import { useHistory } from "react-router-dom";
 import AdminProductModal from "../../components/modal-admin-product";
 import { ProductModel } from "../../types/products";
+import Banner from "../../components/banner";
 
 function Admin(props: any) {
   const { products, deleteProduct } = useProducts();
@@ -87,6 +88,7 @@ function Admin(props: any) {
   return (
     <>
       <AdminProductModal isAdding={isAdding} product={product} modalProps={PropsModal} />
+      <Banner />
       {showDeleteMsg ?
         <Alert status="error">
           <AlertIcon />
@@ -114,7 +116,7 @@ function Admin(props: any) {
             </Button>
 
           </Stack>
-          <Table variant="simple">
+          <Table variant="simple" style={{ background: "#fff" }}>
             <Thead>
               <Tr>
                 <Th>Produto</Th>
@@ -131,7 +133,7 @@ function Admin(props: any) {
                   <Td>{item.nome}</Td>
                   <Td>{item.descricao}</Td>
                   <Td isNumeric>{item.quantidade}</Td>
-                  <Td style={{ display: "flex", position: "absolute" }}>
+                  <Td style={{ paddingRight: 0, paddingLeft: "10px" }}>
                     <IconButton
                       style={{ marginRight: "5px" }}
                       colorScheme="green"

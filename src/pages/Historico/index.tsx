@@ -7,6 +7,7 @@ import { ProductModel } from "../../types/products";
 import { currencyFormatter } from "../../utils/formatter";
 import { RiReplyAllFill } from "react-icons/ri";
 import { useCart } from "../../contexts/cart";
+import Banner from "../../components/banner";
 
 function Historico() {
     const { obterUltimasCompras, obterProdutosPorListaId, products } = useProducts();
@@ -43,58 +44,63 @@ function Historico() {
     }
 
     return (
-        <div className="row" style={{ margin: "15px" }}>
-            <div className="col col-12">
-                <Heading
-                    as="h3"
-                    borderBottom="5px solid"
-                    borderColor="blue.600"
-                    p="0 10px"
-                    w="fit-content"
-                >
-                    Ultimas Compras
-                </Heading>
-                <Table variant="simple">
-                    <Thead>
-                        <Tr>
-                            <Th>Data da Compra</Th>
-                            <Th>Produtos Comprados</Th>
-                            <Th>Valor Total</Th>
-                            <Th>Ação</Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {compras.sort(function (a: any, b: any) {
-                            return a.id > b.id ? -1 : a.id < b.id ? 1 : 0;
-                        }).map((item: any) => (
-                            <Tr key={item.id}>
-                                <Td>{item.dataCompra}</Td>
-                                <Td>{item.compra.map((prod: any) => {
-
-                                    return (
-                                        <div key={`${prod.idProduto}${prod.quantidade}`} >{produtos.find((x: any) => x.id == prod.idProduto)?.nome} x {prod.quantidade}</div>
-                                    )
-
-                                })}</Td>
-                                <Td >{currencyFormatter(item.total)}</Td>
-                                <Td>
-                                    <IconButton
-                                        style={{ marginRight: "5px" }}
-                                        colorScheme="green"
-                                        size="sm"
-                                        aria-label="Comprar Novamente"
-                                        icon={<RiReplyAllFill />}
-                                        onClick={() => handleBuyAgain(item)}
-                                    />
-
-                                </Td>
+        <>
+            <Banner />
+            <div className="row" style={{ margin: "15px" }}>
+                <div className="col col-12">
+                    <Heading
+                        as="h3"
+                        borderBottom="5px solid"
+                        borderColor="blue.600"
+                        p="0 10px"
+                        w="fit-content"
+                    >
+                        Ultimas Compras
+                    </Heading>
+                    <br/>
+                    <Table variant="simple" style={{ background: "#fff" }}>
+                        <Thead>
+                            <Tr>
+                                <Th>Data da Compra</Th>
+                                <Th>Produtos Comprados</Th>
+                                <Th>Valor Total</Th>
+                                <Th>Ação</Th>
                             </Tr>
-                        ))}
-                    </Tbody>
-                </Table>
+                        </Thead>
+                        <Tbody>
+                            {compras.sort(function (a: any, b: any) {
+                                return a.id > b.id ? -1 : a.id < b.id ? 1 : 0;
+                            }).map((item: any) => (
+                                <Tr key={item.id}>
+                                    <Td>{item.dataCompra}</Td>
+                                    <Td>{item.compra.map((prod: any) => {
 
+                                        return (
+                                            <div key={`${prod.idProduto}${prod.quantidade}`} >{produtos.find((x: any) => x.id == prod.idProduto)?.nome} x {prod.quantidade}</div>
+                                        )
+
+                                    })}</Td>
+                                    <Td >{currencyFormatter(item.total)}</Td>
+                                    <Td>
+                                        <IconButton
+                                            style={{ marginRight: "5px" }}
+                                            colorScheme="green"
+                                            size="sm"
+                                            aria-label="Comprar Novamente"
+                                            icon={<RiReplyAllFill />}
+                                            onClick={() => handleBuyAgain(item)}
+                                        />
+
+                                    </Td>
+                                </Tr>
+                            ))}
+                        </Tbody>
+                    </Table>
+
+                </div>
             </div>
-        </div>
+        </>
+
     );
 }
 

@@ -5,6 +5,9 @@ import Card from "../../components/card";
 import { useProducts } from "../../contexts/products";
 import { useAuth } from "../../contexts/auth";
 
+import "./style.css";
+import Banner from "../../components/banner";
+
 const ListProducts: React.FC = () => {
   const { products, obterFavoritos } = useProducts();
   const { signed, user } = useAuth();
@@ -27,6 +30,7 @@ const ListProducts: React.FC = () => {
 
   return (
     <>
+      <Banner/>
       <Box as="main">
         <Stack spacing="md">
           <Heading

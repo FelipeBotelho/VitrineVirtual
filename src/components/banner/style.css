@@ -1,0 +1,17 @@
+.banner{
+    height: 100px;
+    width: 100%;
+    margin-top: 10px;
+    
+    background-color: rgb(214, 195, 179);
+    border-radius: 5px;
+
+}
+
+.bannerImagem{
+    height: 100%;
+}
+
+.bannerTexto{
+    text-align: center;
+}
