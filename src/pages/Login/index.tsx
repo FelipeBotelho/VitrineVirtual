@@ -17,7 +17,6 @@ const Login: React.FC<Props> = ({ history }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const { Login } = useAuth();
-
   const initialValues: {
     username: string;
     password: string;
@@ -27,9 +26,13 @@ const Login: React.FC<Props> = ({ history }) => {
   };
 
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required("This field is required!"),
-    password: Yup.string().required("This field is required!"),
+    username: Yup.string().required("Este campo é obrigatorio"),
+    password: Yup.string().required("Este campo é obrigatorio"),
   });
+
+  const handleSignup = () =>{
+    history.push("/signup");
+  }
 
   async function handleLogin(formValue: { username: string; password: string }){
     const { username, password } = formValue;
@@ -65,7 +68,7 @@ const Login: React.FC<Props> = ({ history }) => {
         >
           <Form>
             <div className="form-group">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="username">Usuário</label>
               <Field name="username" type="text" className="form-control" />
               <ErrorMessage
                 name="username"
@@ -75,7 +78,7 @@ const Login: React.FC<Props> = ({ history }) => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password">Senha</label>
               <Field name="password" type="password" className="form-control" />
               <ErrorMessage
                 name="password"
@@ -89,7 +92,12 @@ const Login: React.FC<Props> = ({ history }) => {
                 {loading && (
                   <span className="spinner-border spinner-border-sm"></span>
                 )}
-                <span>Login</span>
+                <span>Entrar</span>
+              </button>
+            </div>
+            <div className="form-group">
+              <button type="button" onClick={handleSignup} className="btn btn-primary btn-block">
+                  <span>Cadastrar</span>
               </button>
             </div>
 
