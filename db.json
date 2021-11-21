@@ -10,7 +10,7 @@
         "Client"
       ],
       "user": "gabriel",
-      "password": "abacate"
+      "password": "1234"
     },
     {
       "id": 2,
@@ -33,17 +33,6 @@
       ],
       "user": "gugu",
       "password": "feijao"
-    },
-    {
-      "id": 4,
-      "name": "Valdenis",
-      "email": "valdenis@vitrine.com",
-      "phone": "16992225564",
-      "roles": [
-        "Client"
-      ],
-      "user": "valdenis",
-      "password": "123456789"
     }
   ],
   "favorito": [
@@ -64,8 +53,8 @@
     },
     {
       "id": 6,
-      "idProduto": 5,
-      "idUsuario": 2
+      "idProduto": 6,
+      "idUsuario": 1
     }
   ],
   "compras": [
@@ -154,20 +143,52 @@
       "id": 5
     },
     {
-      "idUsuario": 2,
-      "idPagamento": 3,
+      "idUsuario": 1,
+      "idPagamento": 1,
       "dataCompra": "20/11/2021",
-      "enderecoEntrega": "Rua Jose Gonçalves 690",
-      "cidadeEntrega": "Matão",
-      "cepEntrega": "15995020",
-      "total": 40,
+      "enderecoEntrega": "Rua 1",
+      "cidadeEntrega": "matão",
+      "cepEntrega": "4536665",
+      "total": 32,
       "compra": [
         {
-          "idProduto": 1,
+          "idProduto": 6,
           "quantidade": 2
         }
       ],
       "id": 6
+    },
+    {
+      "idUsuario": 1,
+      "idPagamento": 2,
+      "dataCompra": "20/11/2021",
+      "enderecoEntrega": "Rua 1",
+      "cidadeEntrega": "matão",
+      "cepEntrega": "4536665",
+      "total": 100,
+      "compra": [
+        {
+          "idProduto": 6,
+          "quantidade": 2
+        }
+      ],
+      "id": 7
+    },
+    {
+      "idUsuario": 2,
+      "idPagamento": 3,
+      "dataCompra": "20/11/2021",
+      "enderecoEntrega": "Rua 1",
+      "cidadeEntrega": "matão",
+      "cepEntrega": "4536665",
+      "total": 50,
+      "compra": [
+        {
+          "idProduto": 6,
+          "quantidade": 1
+        }
+      ],
+      "id": 8
     }
   ],
   "pagamentos": [
@@ -191,8 +212,7 @@
       "preco": 20,
       "descricao": "Um queijo fresco , levemente adocicado",
       "foto": "https://www.terra.com.br/culinaria/infograficos/tipos-de-queijos/galeria/fotos/tipos-de-queijos-1.jpg",
-      "quantidade": 6,
-      "rate": 3
+      "quantidade": 8
     },
     {
       "id": 2,
@@ -229,10 +249,35 @@
     },
     {
       "id": 6,
-      "nome": "Queijo Edam",
-      "preco": 68,
-      "descricao": "Um queijo do tipo Premium.",
-      "foto": "data:image/jpeg;base64,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",
+      "nome": "Doce de Leite",
+      "preco": 50,
+      "descricao": "Doce de Leite Mineiro",
+      "foto": "https://th.bing.com/th/id/R.5d982a51505abc0a7e1cc76630973f19?rik=BUIHpSfUl5KvNg&pid=ImgRaw&r=0",
+      "quantidade": 10,
+      "rate": 2
+    },
+    {
+      "id": 7,
+      "nome": "Queijo Meia Cura",
+      "preco": 24.5,
+      "descricao": "O queijo meia cura é um tipo de queijo que não é nem fresco e nem curado. O período do queijo meia cura não é bem definido. Afinal, pode variar de uma a cinco semanas. Além disso, a temperatura também varia muito, indo desde 10 ºC até a temperatura ambiente.",
+      "foto": "https://http2.mlstatic.com/queijo-mineiro-meia-cura-serra-canastra-artesanal-so-roque-D_NQ_NP_669854-MLB28818824384_112018-F.jpg",
+      "quantidade": 10
+    },
+    {
+      "id": 8,
+      "nome": "Queijo Coalho",
+      "preco": 15,
+      "descricao": "O queijo coalho ou queijo de coalho é um tipo de queijo, produzido por fermentação e coagulação, tradicionalmente fabricado e amplamente consumido na região Nordeste do Brasil.",
+      "foto": "https://www.laticiniosdavaca.com.br/wp-content/uploads/2015/10/foto_queijo_coalho.jpg",
+      "quantidade": 15
+    },
+    {
+      "id": 9,
+      "nome": "Salame",
+      "preco": 25,
+      "descricao": "O salame é composto por uma mistura de diferentes tipos de carnes moídas e uma série de outros ingredientes.",
+      "foto": "https://www.receiteria.com.br/wp-content/uploads/receitas-de-salame-2.jpg?x17678",
       "quantidade": 9
     }
   ]
