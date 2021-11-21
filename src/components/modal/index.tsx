@@ -56,24 +56,14 @@ export default function ProductModal({
             history.push("/login");
             return;
         }
-        const favoritos = await obterFavoritos(user.id);
+
+        var lastIdForAll = await obterUltimoIdFavorito();
         let obj = {};
-        if (favoritos.length > 0) {
-            const lastId = favoritos.sort(function (a: any, b: any) {
-                return a.id > b.id ? -1 : a.id < b.id ? 1 : 0;
-            })[0].id;
-            obj = {
-                id: lastId + 1,
-                idProduto: id,
-                idUsuario: user.id
-            }
-        } else {
-            var lastIdForAll = await obterUltimoIdFavorito();
-            obj = {
-                id: lastIdForAll +1,
-                idProduto: id,
-                idUsuario: user.id
-            }
+
+        obj = {
+            id: lastIdForAll + 1,
+            idProduto: id,
+            idUsuario: user.id
         }
         await favoritarProduto(obj);
     }
@@ -84,7 +74,7 @@ export default function ProductModal({
             return;
         }
         const favoritos = await obterFavoritos(user.id);
-        const favorito = favoritos.find((x:any) => x.idProduto == id && x.idUsuario == user.id).id;
+        const favorito = favoritos.find((x: any) => x.idProduto == id && x.idUsuario == user.id).id;
         await desfavoritarProduto(favorito);
     }
 

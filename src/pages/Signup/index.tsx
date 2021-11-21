@@ -52,11 +52,11 @@ const Signup: React.FC<Props> = ({ history }) => {
 
 
   const validationSchema = Yup.object().shape({
-    username: Yup.string().required("This field is required!"),
-    name: Yup.string().required("This field is required!"),
-    email: Yup.string().required("This field is required!"),
-    phone: Yup.string().required("This field is required!"),
-    password: Yup.string().required("This field is required!"),
+    username: Yup.string().required("Este campo é obrigatorio"),
+    name: Yup.string().required("Este campo é obrigatorio"),
+    email: Yup.string().required("Este campo é obrigatorio"),
+    phone: Yup.string().required("Este campo é obrigatorio"),
+    password: Yup.string().required("Este campo é obrigatorio"),
   });
 
   async function handleSignup(formValue: { username: string; password: string, name: string, email: string, phone: string }) {
@@ -105,7 +105,7 @@ const Signup: React.FC<Props> = ({ history }) => {
               
             </div>
             <div className="form-group">
-              <label htmlFor="name">Name</label>
+              <label htmlFor="name">Nome</label>
               <Field name="name" type="text" className="form-control" />
               <ErrorMessage
                 name="name"
@@ -114,7 +114,7 @@ const Signup: React.FC<Props> = ({ history }) => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">E-mail</label>
               <Field name="email" type="text" className="form-control" />
               <ErrorMessage
                 name="email"
@@ -123,7 +123,7 @@ const Signup: React.FC<Props> = ({ history }) => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="phone">Phone</label>
+              <label htmlFor="phone">Telefone</label>
               <Field name="phone" type="text" className="form-control" />
               <ErrorMessage
                 name="phone"
@@ -132,7 +132,7 @@ const Signup: React.FC<Props> = ({ history }) => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="username">Username</label>
+              <label htmlFor="username">Usuário</label>
               <Field name="username" type="text" className="form-control" />
               <ErrorMessage
                 name="username"
@@ -142,7 +142,7 @@ const Signup: React.FC<Props> = ({ history }) => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="password">Password</label>
+              <label htmlFor="password">Senha</label>
               <Field name="password" type="password" className="form-control" />
               <ErrorMessage
                 name="password"
@@ -156,7 +156,7 @@ const Signup: React.FC<Props> = ({ history }) => {
                 {loading && (
                   <span className="spinner-border spinner-border-sm"></span>
                 )}
-                <span>Login</span>
+                <span>Cadastrar</span>
               </button>
             </div>
 
