@@ -10,7 +10,7 @@
         "Client"
       ],
       "user": "gabriel",
-      "password": "abacate"
+      "password": "1234"
     },
     {
       "id": 2,
@@ -49,6 +49,11 @@
     {
       "id": 5,
       "idProduto": 1,
+      "idUsuario": 1
+    },
+    {
+      "id": 6,
+      "idProduto": 6,
       "idUsuario": 1
     }
   ],
@@ -136,6 +141,54 @@
         }
       ],
       "id": 5
+    },
+    {
+      "idUsuario": 1,
+      "idPagamento": 1,
+      "dataCompra": "20/11/2021",
+      "enderecoEntrega": "Rua 1",
+      "cidadeEntrega": "matão",
+      "cepEntrega": "4536665",
+      "total": 32,
+      "compra": [
+        {
+          "idProduto": 6,
+          "quantidade": 2
+        }
+      ],
+      "id": 6
+    },
+    {
+      "idUsuario": 1,
+      "idPagamento": 2,
+      "dataCompra": "20/11/2021",
+      "enderecoEntrega": "Rua 1",
+      "cidadeEntrega": "matão",
+      "cepEntrega": "4536665",
+      "total": 100,
+      "compra": [
+        {
+          "idProduto": 6,
+          "quantidade": 2
+        }
+      ],
+      "id": 7
+    },
+    {
+      "idUsuario": 2,
+      "idPagamento": 3,
+      "dataCompra": "20/11/2021",
+      "enderecoEntrega": "Rua 1",
+      "cidadeEntrega": "matão",
+      "cepEntrega": "4536665",
+      "total": 50,
+      "compra": [
+        {
+          "idProduto": 6,
+          "quantidade": 1
+        }
+      ],
+      "id": 8
     }
   ],
   "pagamentos": [
@@ -193,6 +246,39 @@
       "foto": "https://www.terra.com.br/culinaria/infograficos/tipos-de-queijos/galeria/fotos/tipos-de-queijos-5.jpg",
       "descricao": "Um sabor levemente picante",
       "quantidade": 10
+    },
+    {
+      "id": 6,
+      "nome": "Doce de Leite",
+      "preco": 50,
+      "descricao": "Doce de Leite Mineiro",
+      "foto": "https://th.bing.com/th/id/R.5d982a51505abc0a7e1cc76630973f19?rik=BUIHpSfUl5KvNg&pid=ImgRaw&r=0",
+      "quantidade": 10,
+      "rate": 2
+    },
+    {
+      "id": 7,
+      "nome": "Queijo Meia Cura",
+      "preco": 24.5,
+      "descricao": "O queijo meia cura é um tipo de queijo que não é nem fresco e nem curado. O período do queijo meia cura não é bem definido. Afinal, pode variar de uma a cinco semanas. Além disso, a temperatura também varia muito, indo desde 10 ºC até a temperatura ambiente.",
+      "foto": "https://http2.mlstatic.com/queijo-mineiro-meia-cura-serra-canastra-artesanal-so-roque-D_NQ_NP_669854-MLB28818824384_112018-F.jpg",
+      "quantidade": 10
+    },
+    {
+      "id": 8,
+      "nome": "Queijo Coalho",
+      "preco": 15,
+      "descricao": "O queijo coalho ou queijo de coalho é um tipo de queijo, produzido por fermentação e coagulação, tradicionalmente fabricado e amplamente consumido na região Nordeste do Brasil.",
+      "foto": "https://www.laticiniosdavaca.com.br/wp-content/uploads/2015/10/foto_queijo_coalho.jpg",
+      "quantidade": 15
+    },
+    {
+      "id": 9,
+      "nome": "Salame",
+      "preco": 25,
+      "descricao": "O salame é composto por uma mistura de diferentes tipos de carnes moídas e uma série de outros ingredientes.",
+      "foto": "https://www.receiteria.com.br/wp-content/uploads/receitas-de-salame-2.jpg?x17678",
+      "quantidade": 9
     }
   ]
 }
